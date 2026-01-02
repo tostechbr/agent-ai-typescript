@@ -1,0 +1,35 @@
+{
+  "name": "agent-ai-typescript",
+  "version": "1.0.0",
+  "description": "Learning project: Building AI Agents with LangChain and LangGraph",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "langchain",
+    "langgraph",
+    "agents",
+    "typescript",
+    "ai"
+  ],
+  "author": "Tiago Santos",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/anthropic": "^1.3.3",
+    "@langchain/core": "^1.1.8",
+    "@langchain/google-genai": "^2.1.3",
+    "@langchain/langgraph": "^1.0.7",
+    "@langchain/openai": "^1.2.0",
+    "dotenv": "^17.2.3",
+    "langchain": "^1.2.3",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,20 +1,24 @@
 /**
- * 01-agents.ts
+ * 05-create-agent.ts
  *
- * Introduction to AI Agents with LangChain!
+ * Creating Agents with createAgent (LangChain v1 API)
  *
  * What is an Agent?
- * Agent = LLM + Tools + Loop
+ * Agent = LLM + Tools + Loop (ReAct pattern)
  *
  * The agent receives a question, decides if it needs a tool,
  * calls the tool, observes the result, and answers.
  *
- * Run: npx tsx src/02-tools/01-agents.ts
+ * This is the HIGH-LEVEL API - great for getting started quickly.
+ * For more control, use LangGraph directly (Module 3+).
+ *
+ * Run: npx tsx src/02-tools/05-create-agent.ts
  */
 
 import "dotenv/config";
 import { z } from "zod";
-import { createAgent, tool, AIMessage, ToolMessage } from "langchain";
+import { tool, createAgent } from "langchain";
+import { AIMessage, HumanMessage, ToolMessage } from "@langchain/core/messages";
 
 /**
  * A REAL tool that fetches Bitcoin price from CoinGecko API
@@ -39,12 +43,11 @@ const getBitcoinPrice = tool(
   }
 );
 
-// Create the agent with just one tool
+// Create the agent with the new LangChain v1 API
 const agent = createAgent({
-  model: "openai:gpt-4o-mini",
+  model: "gpt-4.1-mini",
   tools: [getBitcoinPrice],
-  systemPrompt:
-    "You are a helpful assistant. When asked about Bitcoin price, use the get_bitcoin_price tool.",
+  systemPrompt: "You are a helpful assistant that provides cryptocurrency information.",
 });
 
 async function main() {
@@ -54,7 +57,7 @@ async function main() {
   console.log("User: What is the current Bitcoin price?\n");
 
   const result = await agent.invoke({
-    messages: [{ role: "user", content: "What is the current Bitcoin price?" }],
+    messages: [new HumanMessage("What is the current Bitcoin price?")],
   });
 
   // Show the ReAct loop

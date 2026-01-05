@@ -1,5 +1,10 @@
 # TypeScript Agents
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![LangChain](https://img.shields.io/badge/LangChain-JS-green.svg)](https://js.langchain.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 > Learning project: Building AI Agents from scratch using LangChain and LangGraph with TypeScript.
 
 ## About
@@ -18,7 +23,7 @@ This repository documents my journey learning to build AI agents using **LangCha
 ```
 src/
 ├── 01-fundamentals/         # LLM basics, messages, streaming, structured output [DONE]
-├── 02-tools/                # Custom tools, Zod validation, agents
+├── 02-tools/                # Custom tools, Zod validation, agents [DONE]
 ├── 03-langgraph-basics/     # State, nodes, edges, conditional logic
 ├── 04-calculator-agent/     # Project: Calculator agent
 ├── 05-memory/               # Short & long-term memory
@@ -83,7 +88,7 @@ npx tsx src/01-fundamentals/01-hello-llm.ts
 ## Progress
 
 - [x] Module 1: Fundamentals
-- [ ] Module 2: Tools & Agents
+- [x] Module 2: Tools & Agents
 - [ ] Module 3: LangGraph Basics
 - [ ] Module 4: Calculator Agent (Project)
 - [ ] Module 5: Memory
@@ -98,9 +103,13 @@ npx tsx src/01-fundamentals/01-hello-llm.ts
 
 ## Resources
 
-- [LangChain JS Docs](https://docs.langchain.com/oss/javascript/langchain/overview)
-- [LangGraph JS Docs](https://docs.langchain.com/oss/javascript/langgraph/overview)
+- [LangChain JS Docs](https://js.langchain.com/)
+- [LangGraph JS Docs](https://langchain-ai.github.io/langgraphjs/)
 - [Anthropic Docs](https://docs.anthropic.com/)
+
+## Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) before submitting a Pull Request.
 
 ## Author
 

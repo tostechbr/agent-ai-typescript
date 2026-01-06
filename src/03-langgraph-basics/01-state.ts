@@ -12,7 +12,7 @@
  * Run: npx tsx src/03-langgraph-basics/01-state.ts
  */
 
-import { Annotation } from "@langchain/langgraph";
+import { Annotation, StateGraph, START, END } from "@langchain/langgraph";
 
 // 1. State is the "memory" of our graph.
 // It defines the format of data that will be passed between steps (nodes).
@@ -37,19 +37,63 @@ const GraphState = Annotation.Root({
   }),
 });
 
-// Just showing that the object was created - in future files we'll use this in StateGraph
+// Just showing that the object was created
 console.log("--- State Schema ---");
 console.log("State defined successfully.");
 console.log("Defined fields:", Object.keys(GraphState.spec));
 
-// Let's simulate how state works conceptually
-console.log("\n--- Conceptual Simulation ---");
-console.log("1. Initial State: { items: [], name: undefined }");
-console.log("2. Node A returns: { items: ['Apple'], name: 'John' }");
-console.log("   -> State becomes: { items: ['Apple'], name: 'John' }");
-console.log("3. Node B returns: { items: ['Banana'] }");
-console.log("   -> State becomes: { items: ['Apple', 'Banana'], name: 'John' }");
-console.log("   (Items concatenated, Name maintained)");
+// Now let's create a REAL graph to see state updates in action!
+// This is the "fluid and dynamic" version - actual execution, not simulation
+
+// Define nodes that will actually update the state
+const nodeA = (state: typeof GraphState.State) => {
+  console.log("\n[Node A executing]");
+  console.log("Current state:", state);
+  // Return an update to the state
+  return {
+    items: ["Apple"],
+    name: "John",
+  };
+};
+
+const nodeB = (state: typeof GraphState.State) => {
+  console.log("\n[Node B executing]");
+  console.log("Current state:", state);
+  // Return an update - items will be concatenated, name stays the same
+  return {
+    items: ["Banana"],
+  };
+};
+
+// Create the actual graph
+const graphBuilder = new StateGraph(GraphState)
+  .addNode("nodeA", nodeA)
+  .addNode("nodeB", nodeB)
+  .addEdge(START, "nodeA")
+  .addEdge("nodeA", "nodeB")
+  .addEdge("nodeB", END);
+
+// Compile the graph
+const graph = graphBuilder.compile();
+
+// Now let's execute it with REAL state updates!
+async function demonstrateState() {
+  console.log("\n--- Real Execution (Dynamic State) ---");
+  console.log("1. Initial State: {} (default values will be applied)");
+
+  // Invoke the graph - this will actually execute nodes and update state
+  // Since 'items' has a default value, we can pass an empty object or explicitly set values
+  const finalState = await graph.invoke({});
+
+  console.log("\n2. Final State after execution:");
+  console.log(finalState);
+  console.log("\n State was updated dynamically during execution!");
+  console.log("   - items: concatenated ['Apple', 'Banana']");
+  console.log("   - name: overwritten to 'John'");
+}
+
+// Run the demonstration
+demonstrateState().catch(console.error);
 
 // Exporting for use in other files
 export { GraphState };
